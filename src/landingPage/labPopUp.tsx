@@ -14,7 +14,7 @@ import {
   Paper,
 } from "@mui/material";
 import EmailBox from "./emailbox";
-import "./labPopup.css";
+import "./labpopup.css";
 
 interface LabPopupProps {
   open: boolean;

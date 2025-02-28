@@ -55,9 +55,9 @@ const FrankHertzMain: React.FC<FrankHertzMainProps> = ({
       <Window rotation = {[0, Math.PI, Math.PI / 2]} position={[12, 35.2, 0.9]}/>
       <Window position={[0, 35.2, -14]}/>
 
-      <TopConnector position={[5.7, 59.5, -2.2]} />
-      <Waffle position={[3.7, 58.5, -2.8]} />
-      <FrankHertzTube position={[-2, 20, -3]} rotation={[0, Math.PI / 2, 0]}/>
+      <TopConnector position={[5.7, 39.5, -2.2]} />
+      <Waffle position={[3.7, 38.5, -2.8]} />
+      <FrankHertzTube position={[-2, 20, 0]} rotation={[0, Math.PI / 2, 0]}/>
       <CircularTherm position={[-15, 49.2, 10.5]} />
     </group>
   )

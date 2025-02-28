@@ -48,6 +48,14 @@ const CustomLab: React.FC = () => {
         if (type === "FrankHertzBox") {
             xOffset = -170;
             yOffset = -120;
+            const Component = object3DMap[type]; 
+            position = [
+                position[0] + xOffset, 
+                position[1] + zOffset, 
+                position[2] + yOffset
+            ];
+            rotation=[0, 3 * Math.PI / 2, 0];
+            return <Component key={id} position={position} rotation={rotation} scale={[1.2, 1.44, 1.2]}/>;
         } else if (type === "VVR") {
             xOffset = -170;
             yOffset = -120;
@@ -70,7 +78,7 @@ const CustomLab: React.FC = () => {
             position[0] + xOffset, // X-axis offset
             position[1] + zOffset, // Z-axis offset
             position[2] + yOffset  // Y-axis offset
-          ];
+        ];
         if (!Component) {
             console.warn(`Component for type "${type}" not found.`);
             return null;
