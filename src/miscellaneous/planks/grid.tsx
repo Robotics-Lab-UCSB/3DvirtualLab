@@ -37,7 +37,7 @@ const Grid: React.FC = () => {
       /> */}
 
       {/* Ground Box */}
-      {model && <primitive object={model} scale={[2, 3, 2.5]} position={[0, -3.9, 0]}/>}
+      {model && <primitive object={model} scale={[3, 3, 4.5]} position={[0, -3.9, 0]}/>}
     </>
   )
 }

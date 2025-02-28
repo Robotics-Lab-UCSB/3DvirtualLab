@@ -2,8 +2,8 @@ import React, { useState, useCallback, useMemo } from "react";
 import "./taskbar.css";
 import Bar from "./bar";
 import LabHelperMain from "./labHelper";
-import SettingsPage from "./settingsPage";
-import LabManual from "./labManual";
+import SettingsPage from "./node_mover/settingsPage";
+import LabManual from "./lab_manual/labManual";
 
 interface FloatingSquareProps {
   width?: string;
@@ -14,9 +14,9 @@ interface FloatingSquareProps {
 }
 
 const FloatingSquare: React.FC<FloatingSquareProps> = ({
-  width = "50%",
-  height = "80%",
-  x = "121%",
+  width = "100%",
+  height = "100%",
+  x = "145%",
   y = "50%",
 }) => {
     const [hide, setHide] = useState<boolean>(true);
@@ -44,16 +44,16 @@ const FloatingSquare: React.FC<FloatingSquareProps> = ({
             top: hide ? y : "50%",
         }}
         >
-        <Bar moveCenter={moveCenter} displayChange={displayChange}/>
-        <div style={{ display: clickedTabNumber === 1 ? "block" : "none" }}>
-            {labHelperComponent}
-        </div>
-        <div style={{ display: clickedTabNumber === 0 ? "block" : "none" }}>
-            {labManualComponent}
-        </div>
-        <div style={{ display: clickedTabNumber === 2 ? "block" : "none" }}>
-            {settingsPageComponent}
-        </div>
+            <Bar moveCenter={moveCenter} displayChange={displayChange}/>
+            <div style={{ display: clickedTabNumber === 1 ? "block" : "none" }}>
+                {labHelperComponent}
+            </div>
+            <div style={{ display: clickedTabNumber === 0 ? "block" : "none" }}>
+                {settingsPageComponent}
+            </div>
+            <div style={{ display: clickedTabNumber === 2 ? "block" : "none" }}>
+                {settingsPageComponent}
+            </div>
         </div>
     );
 };

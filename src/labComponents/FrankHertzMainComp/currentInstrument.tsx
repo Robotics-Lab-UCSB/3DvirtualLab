@@ -3,6 +3,7 @@ import * as THREE from "three"
 import { useLoader } from "@react-three/fiber"
 import ParentComponent from "../Buttons/parentButton"
 import { GLTFLoader } from "three-stdlib"
+import Text3D from "../../pannels/textPannel"
 
 interface CurrentInstrumentProps {
   position: [number, number, number]
@@ -44,6 +45,7 @@ const CurrentInstrument: React.FC<CurrentInstrumentProps> = ({
     <group ref={groupRef} position={position} rotation={rotation}>
       {model && <primitive object={model} scale={[0.25, 0.25, 0.25]} />}
       <ParentComponent position={position} />
+      <Text3D position={[-6, 11, 27.5]} size={4} color="gray" />
     </group>
   )
 }

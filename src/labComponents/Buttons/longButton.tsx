@@ -1,108 +1,99 @@
-import React, { useRef, useEffect, useState } from "react"
-import { useLoader, useFrame } from "@react-three/fiber"
-import { GLTFLoader } from "three-stdlib"
-import * as THREE from "three"
+import React, { useRef, useEffect, useState } from "react";
+import { useLoader, useFrame } from "@react-three/fiber";
+import { GLTFLoader } from "three-stdlib";
+import * as THREE from "three";
 
-interface buttonProps {
-  position: [number, number, number] // Position prop for placement in the scene
-  rotation: [number, number, number]
-  scale?: [number, number, number]
-  onClick?: () => void
-  unique_id: string
+interface ButtonProps {
+  position: [number, number, number];
+  rotation?: [number, number, number];
+  scale?: [number, number, number];
+  unique_id: string;
+  typeGen: string;
 }
 
-const Button2: React.FC<buttonProps> = ({
+const Button1: React.FC<ButtonProps> = ({
   position,
   rotation = [0, Math.PI, 0],
-  unique_id,
   scale = [1, 1, 1],
+  unique_id,
+  typeGen,
 }) => {
-  const groupRef = useRef<THREE.Group | null>(null)
-  const [currentPosition] = useState<[number, number, number]>(position)
-  const [isMovingForward, setIsMovingForward] = useState(false)
-  const [isMovingBack, setIsMovingBack] = useState(false)
+  const groupRef = useRef<THREE.Group | null>(null);
+  const [isMovingForward, setIsMovingForward] = useState(false);
+  const [isMovingBack, setIsMovingBack] = useState(false);
+  const [model, setModel] = useState<THREE.Object3D | null>(null);
 
-  // Load GLB model
-  const gltf = useLoader(GLTFLoader, "/current_instrument_buttons/circle_button5.glb")
-  const [model, setModel] = useState<THREE.Object3D | null>(null)
+  // Dynamically load GLB model based on `typeGen`
+  const gltf = useLoader(
+    GLTFLoader,
+    ""
+  );
 
+  // Clone and configure the GLTF model on load
   useEffect(() => {
-    if (gltf.scene) {
-      // Clone the GLTF scene to avoid conflicts
-      const clonedScene = gltf.scene.clone()
+    if (gltf?.scene) {
+      const clonedScene = gltf.scene.clone();
 
-      // Add unique ID and interaction behavior to the clone
+      // Add unique ID and click behavior
       clonedScene.traverse((child) => {
         if ((child as THREE.Mesh).isMesh) {
-          const mesh = child as THREE.Mesh
-          mesh.userData.unique_id = unique_id
-          mesh.userData.handleIntersect = handleClick
+          const mesh = child as THREE.Mesh;
+          mesh.userData.unique_id = unique_id;
+          mesh.userData.handleIntersect = handleClick;
+          mesh.userData.type = "triangle_circle_button";
         }
-      })
+      });
 
-      setModel(clonedScene) // Store the cloned model in state
+      setModel(clonedScene);
     }
-  }, [gltf, unique_id])
+  }, [gltf, unique_id]);
 
+  // Animation logic
   useFrame(() => {
-    if (isMovingForward && groupRef.current) {
-      // Move downward by 0.5 units on the Y-axis
-      const newPosY = THREE.MathUtils.lerp(
-        groupRef.current.position.y,
-        currentPosition[1] - 0.5, // Target position is below the original
-        0.1,
-      )
-      groupRef.current.position.set(
-        currentPosition[0],
-        newPosY,
-        currentPosition[2],
-      )
+    if (groupRef.current) {
+      const posY = groupRef.current.position.y;
 
-      // Stop moving forward once it reaches the target position
-      if (Math.abs(newPosY - (currentPosition[1] - 0.5)) < 0.01) {
-        setIsMovingForward(false)
-        setTimeout(() => {
-          setIsMovingBack(true) // Trigger moving back after 0.3 seconds
-        }, 300)
+      if (isMovingForward) {
+        const targetY = position[1] - 0.5;
+        groupRef.current.position.y = THREE.MathUtils.lerp(posY, targetY, 0.6);
+
+        if (Math.abs(posY - targetY) < 0.01) {
+          setIsMovingForward(false);
+          setTimeout(() => setIsMovingBack(true), 50);
+        }
+      }
+
+      if (isMovingBack) {
+        const targetY = position[1];
+        groupRef.current.position.y = THREE.MathUtils.lerp(posY, targetY, 0.4);
+
+        if (Math.abs(posY - targetY) < 0.01) {
+          setIsMovingBack(false);
+        }
       }
     }
+  });
 
-    if (isMovingBack && groupRef.current) {
-      // Move back to the original position
-      const newPosY = THREE.MathUtils.lerp(
-        groupRef.current.position.y,
-        currentPosition[1], // Return to the original position
-        0.1,
-      )
-      groupRef.current.position.set(
-        currentPosition[0],
-        newPosY,
-        currentPosition[2],
-      )
-
-      // Stop moving back once it reaches the original position
-      if (Math.abs(newPosY - currentPosition[1]) < 0.01) {
-        setIsMovingBack(false) // Stop moving
-      }
-    }
-  })
-
+  // Handle click event
   const handleClick = () => {
-    if (!isMovingForward) {
-      setIsMovingForward(true) // Start moving forward on click
+    if (!isMovingForward && !isMovingBack) {
+      setIsMovingForward(true);
     }
-  }
+  };
 
-  if (!model) {
-    return null // Render nothing until the model is fully loaded
-  }
+  // Render nothing until the model is ready
+  if (!model) return null;
 
   return (
-    <group ref={groupRef} position={position} rotation={rotation} scale={scale}>
-      {/* Render the cloned GLTF model */}
+    <group
+      ref={groupRef}
+      position={position}
+      rotation={rotation}
+      scale={scale}
+    >
       <primitive object={model} />
     </group>
-  )
-}
+  );
+};
 
-export default Button2
+export default Button1;

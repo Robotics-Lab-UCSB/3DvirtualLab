@@ -25,7 +25,7 @@ const Dashboard: React.FC = () => {
   const [selectedLab, setSelectedLab] = useState<Lab | null>(null); // State to store the selected lab
   const navigate = useNavigate();
   const [labIds, setLabIds] = useState<string[]>([]); // State to store invite lab IDs
-
+  
   const acceptLabInvitation = async (labId: string) => {
     try {
       const response = await fetch("http://127.0.0.1:8000/auth/accept_collaboration/", {

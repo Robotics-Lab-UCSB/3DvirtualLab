@@ -2,20 +2,21 @@ import React, { useRef, useState, useEffect } from "react"
 import * as THREE from "three"
 import { useLoader } from "@react-three/fiber"
 import { GLTFLoader } from "three-stdlib"
-import CircularTherm from "../SmallInstruments/circularTherm/ThermometerMainComponent"
+import WireStable from "../SmallInstruments/wire_stable"
+import Text3D from "../../pannels/textPannel"
 
-interface FrankHertzMainProps {
+interface DVM2PROPS {
   position: [number, number, number] // Position prop
   rotation?: [number, number, number] // Optional rotation prop
-  unique_id: string
+  unique_id?: string
   scale?: [number, number, number]
 }
 
-const FrankHertzMain: React.FC<FrankHertzMainProps> = ({
+const DVM: React.FC<DVM2PROPS> = ({
   position,
   rotation = [Math.PI / 2, 0, 0], // Default to 90 degrees around the Y-axis
   unique_id,
-  scale = [0.5, 0.5, 0.5],
+  scale = [1.7, 1.7, 1.85],
 }) => {
   const gltf = useLoader(GLTFLoader, "/dcv/dcv23.glb")
   const [model, setModel] = useState<THREE.Object3D | null>(null)
@@ -39,10 +40,12 @@ const FrankHertzMain: React.FC<FrankHertzMainProps> = ({
   }, [gltf, unique_id])
 
   return (
+    
     <group ref={groupRef} position={position} rotation={rotation} scale={scale}>
       {model && <primitive object={model}/>}
+        <Text3D position={[0.4, 2.4, 3]} rotation={[3 * Math.PI / 2, 0, 0]} size={3} color="gray" digits={2} decimalPlaces={2} />
     </group>
   )
 }
 
-export default FrankHertzMain
+export default DVM

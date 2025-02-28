@@ -34,6 +34,7 @@ const Button1: React.FC<ButtonProps> = ({
   // Clone and configure the GLTF model on load
   useEffect(() => {
     if (gltf?.scene) {
+      console.log("HELLO")
       const clonedScene = gltf.scene.clone();
 
       // Add unique ID and click behavior
@@ -42,11 +43,7 @@ const Button1: React.FC<ButtonProps> = ({
           const mesh = child as THREE.Mesh;
           mesh.userData.unique_id = unique_id;
           mesh.userData.handleIntersect = handleClick;
-          if (typeGen === "triangleButton"){
-            mesh.userData.type = "triangle_button";
-          } else {
-            mesh.userData.type = "circle_button";
-          }
+          mesh.userData.type = "triangle_circle_button";
         }
       });
 

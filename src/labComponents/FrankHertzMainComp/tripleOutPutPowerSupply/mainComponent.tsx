@@ -17,7 +17,7 @@ const TripleOutput: React.FC<TripleOutputProps> = ({
   unique_id = "triple_output_supply",
   scale = [1, 1, 1],
 }) => {
-  const gltf = useLoader(GLTFLoader, "/triple_output_power_supply/tops8.glb")
+  const gltf = useLoader(GLTFLoader, "/triple_output_power_supply/tops3.glb")
   const [model, setModel] = useState<THREE.Object3D | null>(null)
 
   useEffect(() => {

@@ -105,7 +105,6 @@ export const WebSocketProvider: React.FC<PropsWithChildren<WebSocketProviderProp
     if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
       socketRef.current.send(JSON.stringify(message));
     } else {
-      console.error("WebSocket not connected.");
     }
   };
 

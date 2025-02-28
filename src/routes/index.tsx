@@ -4,6 +4,8 @@ import WebSocketComponent from "../Websocket/experiments/websocketTest"
 import RegisterPage from "../landingPage/loginPage/loginPage"
 import Dashboard from "../landingPage/homePage/homepage"
 import ProtectedLabRoute from "../landingPage/protectedLabroute"
+import CustomLab from "../LABS/custom_lab"
+import { NodePositionProvider } from '../taskbar/node_mover/hook_position';
 
 const routers = createBrowserRouter([
   {
@@ -12,6 +14,14 @@ const routers = createBrowserRouter([
       <ProtectedLabRoute>
         <GraphPaperComponent />
       </ProtectedLabRoute>
+    ),
+  },
+  {
+    path: "/playground",
+    element: (
+      <NodePositionProvider>
+        <CustomLab />
+      </NodePositionProvider>
     ),
   },
   {

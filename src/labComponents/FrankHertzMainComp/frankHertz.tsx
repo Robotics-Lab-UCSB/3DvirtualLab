@@ -1,8 +1,12 @@
 import React, { useRef, useState, useEffect } from "react"
 import * as THREE from "three"
-import { useLoader } from "@react-three/fiber"
+import { useLoader, ThreeEvent } from "@react-three/fiber"
 import { GLTFLoader } from "three-stdlib"
-import CircularTherm from "../SmallInstruments/circularTherm/ThermometerMainComponent"
+import Window from "../../pannels/window"
+import CircularTherm from "../SmallInstruments/circularTherm/thermometer_virtual"
+import TopConnector from "./top_connector"
+import Waffle from "./waffle"
+import FrankHertzTube from "./tube"
 
 interface FrankHertzMainProps {
   position: [number, number, number] // Position prop
@@ -13,11 +17,11 @@ interface FrankHertzMainProps {
 
 const FrankHertzMain: React.FC<FrankHertzMainProps> = ({
   position,
-  rotation = [0, Math.PI / 2, 0], // Default to 90 degrees around the Y-axis
-  unique_id = "frank_hertz_main",
+  rotation = [0, 3 * Math.PI / 2, 0], // Default to 90 degrees around the Y-axis
+  unique_id = "frank_hertz_main", // TODO: This should be ALWAYS unique
   scale = [1, 1.2, 1],
 }) => {
-  const gltf = useLoader(GLTFLoader, "/frank_hertz/frank_main3.glb")
+  const gltf = useLoader(GLTFLoader, "/frank_hertz/main_box3.glb")
   const [model, setModel] = useState<THREE.Object3D | null>(null)
   const groupRef = useRef<THREE.Group | null>(null)
 
@@ -30,7 +34,9 @@ const FrankHertzMain: React.FC<FrankHertzMainProps> = ({
         if ((child as THREE.Mesh).isMesh) {
           const mesh = child as THREE.Mesh
           mesh.userData.unique_id = unique_id
+          mesh.userData.controlled_by = unique_id
           mesh.userData.type = "frank_hertz_chasis"
+          mesh.renderOrder = 0
         }
       })
 
@@ -38,10 +44,21 @@ const FrankHertzMain: React.FC<FrankHertzMainProps> = ({
     }
   }, [gltf, unique_id])
 
+  const handleClick = (event: ThreeEvent<MouseEvent>) => {
+    console.log("Clicked group userData:", event.object.userData);
+  };
+
   return (
-    <group ref={groupRef} position={position} rotation={rotation} scale={scale}>
+    <group ref={groupRef} position={position} rotation={rotation} scale={scale} userData={{ unique_instrument_id: unique_id }} onClick={handleClick} >
       {model && <primitive object={model} scale={[0.65, 0.65, 0.65]} />}
-      <CircularTherm position={[4, 49.2, -13.5]} />
+      <Window position={[0, 35.2, 13.9]}/>
+      <Window rotation = {[0, Math.PI, Math.PI / 2]} position={[12, 35.2, 0.9]}/>
+      <Window position={[0, 35.2, -14]}/>
+
+      <TopConnector position={[5.7, 59.5, -2.2]} />
+      <Waffle position={[3.7, 58.5, -2.8]} />
+      <FrankHertzTube position={[-2, 20, -3]} rotation={[0, Math.PI / 2, 0]}/>
+      <CircularTherm position={[-15, 49.2, 10.5]} />
     </group>
   )
 }
