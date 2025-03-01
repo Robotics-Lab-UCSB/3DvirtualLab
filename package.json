@@ -40,6 +40,7 @@
     "three-stdlib": "^2.29.11"
   },
   "devDependencies": {
+    "@rollup/rollup-linux-arm64-gnu": "^4.34.8",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.0.1",
     "@types/jest": "^29.5.14",
