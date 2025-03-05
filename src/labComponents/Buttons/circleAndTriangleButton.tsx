@@ -11,7 +11,7 @@ interface ButtonProps {
   typeGen: string;
 }
 
-const Button1: React.FC<ButtonProps> = ({
+const ButtonCircleAndTriangle: React.FC<ButtonProps> = ({
   position,
   rotation = [0, Math.PI, 0],
   scale = [1, 1, 1],
@@ -27,7 +27,7 @@ const Button1: React.FC<ButtonProps> = ({
   const gltf = useLoader(
     GLTFLoader,
     typeGen === "triangleButton"
-      ? "/current_instrument_buttons/triangle_button.glb"
+      ? "/current_instrument_buttons/triangle_button3.glb"
       : "/current_instrument_buttons/circle_button5.glb"
   );
 
@@ -54,11 +54,11 @@ const Button1: React.FC<ButtonProps> = ({
   // Animation logic
   useFrame(() => {
     if (groupRef.current) {
-      const posY = groupRef.current.position.y;
+      const posY = groupRef.current.position.z;
 
       if (isMovingForward) {
-        const targetY = position[1] - 0.5;
-        groupRef.current.position.y = THREE.MathUtils.lerp(posY, targetY, 0.6);
+        const targetY = position[2] - 0.5;
+        groupRef.current.position.z = THREE.MathUtils.lerp(posY, targetY, 0.6);
 
         if (Math.abs(posY - targetY) < 0.01) {
           setIsMovingForward(false);
@@ -67,8 +67,8 @@ const Button1: React.FC<ButtonProps> = ({
       }
 
       if (isMovingBack) {
-        const targetY = position[1];
-        groupRef.current.position.y = THREE.MathUtils.lerp(posY, targetY, 0.4);
+        const targetY = position[2];
+        groupRef.current.position.z = THREE.MathUtils.lerp(posY, targetY, 0.4);
 
         if (Math.abs(posY - targetY) < 0.01) {
           setIsMovingBack(false);
@@ -99,4 +99,4 @@ const Button1: React.FC<ButtonProps> = ({
   );
 };
 
-export default Button1;
+export default ButtonCircleAndTriangle;

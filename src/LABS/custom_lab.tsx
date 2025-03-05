@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { PerspectiveCamera, Environment } from "@react-three/drei";
+import { PerspectiveCamera, Environment, Preload } from "@react-three/drei";
 import * as THREE from "three";
 import CornerText from "../miscellaneous/2DTexts/2dText.tsx";
 import Grid from "../miscellaneous/planks/grid.tsx";
@@ -16,13 +16,17 @@ import TripleOutput from "../labComponents/FrankHertzMainComp/tripleOutPutPowerS
 import DVM from "../labComponents/FrankHertzMainComp/digitalVoltmeter.tsx";
 import ParticleConnection from "../misc/wires/wire.tsx";
 import OakPlank43 from "../miscellaneous/planks/wood43.tsx";
+import CurrentInstrument from "../labComponents/FrankHertzMainComp/currentInstrument.tsx";
 import Triple_Output_supply from "../taskbar/lab_nodes/triple_output_supply.tsx";
+import { NodeEdgeProvider } from "../taskbar/node_mover/node_edge_context.tsx";
+import PreloadModels from "./preload_models.tsx";
 
-const object3DMap: Record<string, React.FC<{ position: [number, number, number]; rotation?: [number, number, number]; scale?: [number, number, number]}>> = {
+const object3DMap: Record<string, React.FC<{ unique_id: string, position: [number, number, number]; rotation?: [number, number, number]; scale?: [number, number, number]}>> = {
   "FrankHertzBox": FrankHertzMain,
   "Variac": VVR,
   "VVR": DVM,
-  "Electrometer": CurrentRegulator,
+  "Electrometer": CurrentInstrument,
+  "CurrentRegulator": CurrentRegulator,
   "Triple_Output_supply": TripleOutput,
 };
 
@@ -55,7 +59,7 @@ const CustomLab: React.FC = () => {
                 position[2] + yOffset
             ];
             rotation=[0, 3 * Math.PI / 2, 0];
-            return <Component key={id} position={position} rotation={rotation} scale={[1.2, 1.44, 1.2]}/>;
+            return <Component unique_id={id} key={id} position={position} rotation={rotation} scale={[1.2, 1.44, 1.2]}/>;
         } else if (type === "VVR") {
             xOffset = -170;
             yOffset = -120;
@@ -64,12 +68,22 @@ const CustomLab: React.FC = () => {
         } else if (type === "Electrometer") {
             xOffset = -168;
             yOffset = -110;
-            zOffset = 15;
-            rotation = [0, Math.PI / 2, 0];
+            zOffset = 16;
+            rotation = [0, 0, 0];
         } else if (type === "Triple_Output_supply") {
             xOffset = -158;
             yOffset = -95;
             zOffset = 15;
+        } else if (type === "Variac") {
+            xOffset = -170;
+            yOffset = -120;
+            zOffset = 15;
+            rotation = [0, 3 * Math.PI / 2, 0];
+        } else if (type == "CurrentRegulator") {
+            xOffset = -170;
+            yOffset = -120;
+            zOffset = 15;
+            rotation = [0, 3 * Math.PI / 2, 0];
         }
         
         const Component = object3DMap[type]; // Ensure the type maps to a component
@@ -84,39 +98,30 @@ const CustomLab: React.FC = () => {
             return null;
         }
 
-      return <Component key={id} position={position} rotation={rotation}/>;
+      return <Component unique_id={id} key={id} position={position} rotation={rotation}/>;
     });
 
     setSceneObjects(newObjects);
   }, [nodePositions]); // ✅ Runs only when nodePositions updates
 
   return (
-    <Suspense fallback={<CornerText position="top-left" text="Loading your Lab..." />}>
-      <CameraProvider>
-        <div style={{ width: "100vw", height: "100vh", overflow: "hidden" }}>
-          <CornerText position="top-left" text="Your Custom Lab" />
-          <FloatingSquare />
-          <Canvas
+        <Canvas
             gl={{ antialias: true }}
             onCreated={({ gl, scene }) => {
-              gl.toneMapping = THREE.ACESFilmicToneMapping;
-              gl.toneMappingExposure = 0.7; // Reduce exposure for less intensity
-              scene.environmentIntensity = 0.5; // Reduce environment lighting
+            gl.toneMapping = THREE.ACESFilmicToneMapping;
+            gl.toneMappingExposure = 0.7; // Reduce exposure for less intensity
+            scene.environmentIntensity = 0.5; // Reduce environment lighting
             }}
-          >
+            >
+            <PreloadModels />
             <Lab1Camera />
             <Environment files="/environment/sky.hdr" background />
             <ambientLight intensity={0.7} />
             <CustomLabRaycastingComponent />
             <OakPlank43 />
-            <ParticleConnection start={[0, 0, 0]} end={[100, 100, 100]} />
-
             {/* Render dynamically added 3D objects */}
             {sceneObjects}
-          </Canvas>
-        </div>
-      </CameraProvider>
-    </Suspense>
+        </Canvas>
   );
 };
 

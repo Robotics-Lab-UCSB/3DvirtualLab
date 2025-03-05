@@ -2,6 +2,8 @@ import React, { useRef, useEffect, useState } from "react"
 import { useLoader } from "@react-three/fiber"
 import { GLTFLoader } from "three-stdlib"
 import * as THREE from "three"
+import { useInstruments } from '../../../contexts/instrument_value';
+import { useFrame } from "@react-three/fiber";
 
 interface OvenKnobProps {
   position: [number, number, number]
@@ -21,7 +23,8 @@ const OvenKnob: React.FC<OvenKnobProps> = ({
   // Load GLTF
   const gltf = useLoader(GLTFLoader, "/knobs/vvrKnob22.glb")
   const [model, setModel] = useState<THREE.Object3D | null>(null)
-
+  const { registerInstrument, updateInstrument, readInstrument } = useInstruments();
+  
   useEffect(() => {
     if (gltf.scene) {
       const clonedScene = gltf.scene.clone()
@@ -42,6 +45,7 @@ const OvenKnob: React.FC<OvenKnobProps> = ({
   return (
     <group ref={groupRef} position={position} rotation={rotation} scale={scale}>
       {model && <primitive object={model} />}
+      
     </group>
   )
 }

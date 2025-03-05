@@ -23,17 +23,12 @@ const Triple_Output_supply = ({ data }: any) => {
     >
       Triple Output Power Supply
 
-        <span style={{ position: "absolute", right: "-50px", top: "10%", fontSize: "12px" }}>Output 1</span>
-        <Handle type="source" position={Position.Right} id="output-1" style={{ top: "10%" }} />
+      <span style={{ position: "absolute", right: "-50px", top: "30%", fontSize: "12px", color: "red" }}>Output +</span>
+      <Handle type="source" position={Position.Right} id="output-positive" style={{ top: "30%", backgroundColor: "red" }} />
 
-        <span style={{ position: "absolute", right: "-50px", top: "35%", fontSize: "12px" }}>Output 2</span>
-        <Handle type="source" position={Position.Right} id="output-2" style={{ top: "35%" }} />
+      <span style={{ position: "absolute", right: "-50px", top: "70%", fontSize: "12px", color: "black" }}>Output -</span>
+      <Handle type="source" position={Position.Right} id="output-negative" style={{ top: "70%", backgroundColor: "black" }} />
 
-        <span style={{ position: "absolute", right: "-50px", top: "65%", fontSize: "12px" }}>Output 3</span>
-        <Handle type="source" position={Position.Right} id="output-3" style={{ top: "65%" }} />
-
-        <span style={{ position: "absolute", right: "-50px", top: "90%", fontSize: "12px" }}>Output 4</span>
-        <Handle type="source" position={Position.Right} id="output-4" style={{ top: "90%" }} />
     </div>
   );
 };

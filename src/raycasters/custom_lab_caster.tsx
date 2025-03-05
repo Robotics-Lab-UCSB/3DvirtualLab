@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react"
 import { useFrame, useThree } from "@react-three/fiber"
 import * as THREE from "three"
+import { useInstruments } from '../contexts/instrument_value';
 
 const CustomLabRaycastingComponent: React.FC = () => {
   
@@ -25,6 +26,9 @@ const CustomLabRaycastingComponent: React.FC = () => {
   const wirePointsRef = useRef<THREE.Vector3[]>([]);
 
   const currentSelectedObject = useRef<THREE.Object3D | null>(null);
+
+  const { registerInstrument, updateInstrument, readInstrument } = useInstruments();
+  
 
   const createCylindersFromPositions = (
     positions: THREE.Vector3[],
@@ -189,6 +193,19 @@ const CustomLabRaycastingComponent: React.FC = () => {
           startPosition.current.y += 0.2;
           if (intersectedObject.userData.type == "triangle_circle_button" || intersectedObject.userData.type == "switch_button") {
             intersectedObject.userData.handleIntersect();
+          } else if (intersectedObject.userData.type == "long_button_type") {
+                const boundingBox = new THREE.Box3().setFromObject(intersectedObject);
+                const center = new THREE.Vector3();
+                boundingBox.getCenter(center);
+                var positionclicked = "left";
+                if (intersectsRef.current[0].point.x > center.x) {
+                    console.log("Clicked on the right half of the component");
+                    positionclicked = "right";
+                } else {
+                    console.log("Clicked on the left half of the component");
+                }
+            intersectedObject.userData.handleIntersect(positionclicked);
+
           }
         }
 
@@ -314,16 +331,35 @@ const CustomLabRaycastingComponent: React.FC = () => {
         } else if (intersectedObject.userData.type === "VVR_knob") {
           if (intersectedObject) {
             intersectedObject.rotation.y -= deltaAngle * 0.4
+            const calculatedValue = (intersectedObject.rotation.y + 2 * Math.PI) % (2 * Math.PI);
+
+            const temperature = (calculatedValue / (2 * Math.PI)) * 130;
+          
+            updateInstrument(intersectedObject.userData.unique_id, "temperature", 130 - temperature);
             vvrKnobAngleRef.current = intersectedObject.rotation.y; 
             if (!savedIntersectedObjectRef.current) {
               savedIntersectedObjectRef.current = intersectedObject;
             }
           }
-        } else if (
-          intersectedObject.userData.type === "current_knob"
-        ) {
+        } else if (intersectedObject.userData.type === "current_knob") {
           if (intersectedObject) {
-            intersectedObject.rotation.y -= deltaAngle * 0.34
+            intersectedObject.rotation.y -= deltaAngle * 0.34;
+            const typeInner = intersectedObject.userData.type_inner;
+            console.log(typeInner)
+
+            if (typeInner === "filament_knob") {
+              const calculatedFilament = (intersectedObject.rotation.y + 2 * Math.PI) % (2 * Math.PI);
+              const filamentVoltage = (calculatedFilament / (2 * Math.PI)) * 10; // Example scaling
+              updateInstrument(intersectedObject.userData.unique_id, "filament_voltage", filamentVoltage);
+            } else if (typeInner === "VRknob") {
+              const calculatedVR = (intersectedObject.rotation.y + 2 * Math.PI) % (2 * Math.PI);
+              const retardingVoltage = (calculatedVR / (2 * Math.PI)) * 50; // Example scaling
+              updateInstrument(intersectedObject.userData.unique_id, "retarding_voltage", retardingVoltage);
+            } else if (typeInner === "VAknob") {
+              const calculatedVA = (intersectedObject.rotation.y + 2 * Math.PI) % (2 * Math.PI);
+              const acceleratingVoltage = (calculatedVA / (2 * Math.PI)) * 100; // Example scaling
+              updateInstrument(intersectedObject.userData.unique_id, "accelerating_voltage", acceleratingVoltage);
+            }
           }
         } else {
           previousSpinning.current = null

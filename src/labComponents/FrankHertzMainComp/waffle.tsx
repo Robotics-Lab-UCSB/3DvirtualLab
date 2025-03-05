@@ -12,7 +12,7 @@ interface WaffleProps {
 
 const Waffle: React.FC<WaffleProps> = ({
   position,
-  rotation = [0, 0, 0], // Default to no rotation
+  rotation = [0, Math.PI /2, 0], // Default to no rotation
   unique_id = "frank_hertz_anode",
   scale = [0.4, 0.4, 0.4],
 }) => {

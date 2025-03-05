@@ -7,11 +7,17 @@ import CircularTherm from "../SmallInstruments/circularTherm/thermometer_virtual
 import TopConnector from "./top_connector"
 import Waffle from "./waffle"
 import FrankHertzTube from "./tube"
+import Shooter from "../shooter"
+import HeatingRods from "./heating_rods"
+import Electrons from "../../raycasters/particles/eletrons"
+import { Position } from '@xyflow/react';
+import { NodePositionProvider } from '../../taskbar/node_mover/hook_position';
+import { runFranckHertzExperiment } from "../../A_JS_Simulations"
 
 interface FrankHertzMainProps {
   position: [number, number, number] // Position prop
   rotation?: [number, number, number] // Optional rotation prop
-  unique_id?: string
+  unique_id: string
   scale?: [number, number, number]
 }
 
@@ -55,10 +61,12 @@ const FrankHertzMain: React.FC<FrankHertzMainProps> = ({
       <Window rotation = {[0, Math.PI, Math.PI / 2]} position={[12, 35.2, 0.9]}/>
       <Window position={[0, 35.2, -14]}/>
 
-      <TopConnector position={[5.7, 39.5, -2.2]} />
-      <Waffle position={[3.7, 38.5, -2.8]} />
+      <TopConnector position={[-0.9, 37.5, -0.2]} />
+      <Waffle position={[-2, 35.9, 1.9]} />
       <FrankHertzTube position={[-2, 20, 0]} rotation={[0, Math.PI / 2, 0]}/>
       <CircularTherm position={[-15, 49.2, 10.5]} />
+      <Shooter position={[-1, 16.4, -0.5]} />
+      <HeatingRods position={[-2.5, 18.5, 2.5]} />
     </group>
   )
 }

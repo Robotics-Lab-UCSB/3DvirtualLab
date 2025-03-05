@@ -1,0 +1,58 @@
+/* ===== Modern Floating Action Button ===== */
+.toggle-button {
+    position: fixed;
+    top: 2rem;
+    right: 2rem; /* Align to the right */
+    z-index: 40002; /* stay on top of other elements */
+    width: 3rem;
+    height: 3rem;
+    border: none;
+    border-radius: 50%;
+    background-color: #1976d2;
+    color: #fff;
+    font-size: 1.4rem;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .toggle-button:hover {
+    background-color: #1565c0;
+    transform: scale(1.05);
+  }
+  
+  /* ===== Sidebar (slides in from the left) ===== */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -270px;  /* hidden by default */
+    width: 250px;
+    height: 100vh;
+    background-color: #fff;
+    border-radius: 0 10px 10px 0; /* round the right edges */
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+  
+  .sidebar.open {
+    left: 0; /* slide into view */
+  }
+  
+  /* ===== Draggable Node Items ===== */
+  .dndnode {
+    padding: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #1a192b;
+    border-radius: 4px;
+    text-align: center;
+    cursor: grab;
+    background-color: #f5f5f5;
+    transition: background-color 0.2s;
+  }
+  
+  .dndnode:hover {
+    background-color: #e0e0e0;
+  }
+  

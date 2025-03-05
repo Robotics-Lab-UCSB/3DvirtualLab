@@ -5,10 +5,10 @@ const Electrometer = ({ data }: any) => {
   return (
     <div
       style={{
-        width: "300px", // Rectangle width
-        height: "200px", // Rectangle height
-        borderRadius: "8px", // Slight rounding for modern look
-        border: "2px solid black", // Subtle outer border
+        width: "300px",
+        height: "200px",
+        borderRadius: "8px",
+        border: "2px solid black",
         background: "linear-gradient(135deg, #d4d4d4, #ffffff, #c0c0c0)", // Chrome-like gradient
         display: "flex",
         alignItems: "center",
@@ -18,23 +18,16 @@ const Electrometer = ({ data }: any) => {
         textAlign: "center",
         color: "#333",
         position: "relative",
-        boxShadow: "4px 4px 12px rgba(0, 0, 0, 0.2)", // Soft shadow for depth
+        boxShadow: "4px 4px 12px rgba(0, 0, 0, 0.2)",
       }}
     >
-      Eletrometer
+      Electrometer
 
-      {/* Input Handles (Left Side) */}
-      <span style={{ position: "absolute", left: "-40px", top: "10%", fontSize: "12px" }}>Input 1</span>
-      <Handle type="target" position={Position.Left} id="input-1" style={{ top: "10%" }} />
-
-      <span style={{ position: "absolute", left: "-40px", top: "35%", fontSize: "12px" }}>Input 2</span>
-      <Handle type="target" position={Position.Left} id="input-2" style={{ top: "35%" }} />
-
-      <span style={{ position: "absolute", left: "-40px", top: "65%", fontSize: "12px" }}>Input 3</span>
-      <Handle type="target" position={Position.Left} id="input-3" style={{ top: "65%" }} />
-
-      <span style={{ position: "absolute", left: "-40px", top: "90%", fontSize: "12px" }}>Input 4</span>
-      <Handle type="target" position={Position.Left} id="input-4" style={{ top: "90%" }} />
+      {/* Single Input Handle */}
+      <span style={{ position: "absolute", left: "-120px", top: "50%", fontSize: "12px", color: "#FF69B4" }}>
+        Electrons Collected
+      </span>
+      <Handle type="target" position={Position.Left} id="input-electrons" style={{ top: "50%", backgroundColor: "#FF69B4" }} />
     </div>
   );
 };

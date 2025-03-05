@@ -2,6 +2,8 @@ import React, { useRef, useState, useEffect } from "react"
 import * as THREE from "three"
 import { useLoader, useThree } from "@react-three/fiber"
 import { GLTFLoader, RGBELoader } from "three-stdlib"
+import Electrons from "../../raycasters/particles/eletrons"
+import { Position } from '@xyflow/react';
 
 interface FrankHertzTubeProps {
   position: [number, number, number]
@@ -76,10 +78,15 @@ const FrankHertzTube: React.FC<FrankHertzTubeProps> = ({
     }
   }, [gltf, unique_id, hdrEnvMap])
 
+  const boundingBox = new THREE.Box3(
+    new THREE.Vector3(-20, -20, -20), // Min bounds
+    new THREE.Vector3(20, 20, 20)     // Max bounds
+)
+
   return (
     <group ref={groupRef} position={position} rotation={rotation} scale={scale}>
       {model && <primitive object={model} scale={[0.65, 0.65, 0.65]} />}
-
+      <Electrons width={21} height={90} position={[2, 49.5, 0]}/>
     </group>
   )
 }

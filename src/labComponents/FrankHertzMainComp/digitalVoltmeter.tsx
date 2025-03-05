@@ -4,11 +4,12 @@ import { useLoader } from "@react-three/fiber"
 import { GLTFLoader } from "three-stdlib"
 import WireStable from "../SmallInstruments/wire_stable"
 import Text3D from "../../pannels/textPannel"
+import { useInstruments } from '../../contexts/instrument_value';
 
 interface DVM2PROPS {
   position: [number, number, number] // Position prop
   rotation?: [number, number, number] // Optional rotation prop
-  unique_id?: string
+  unique_id: string
   scale?: [number, number, number]
 }
 
@@ -21,6 +22,13 @@ const DVM: React.FC<DVM2PROPS> = ({
   const gltf = useLoader(GLTFLoader, "/dcv/dcv23.glb")
   const [model, setModel] = useState<THREE.Object3D | null>(null)
   const groupRef = useRef<THREE.Group | null>(null)
+  const { registerInstrument, updateInstrument, readInstrument } = useInstruments();
+  
+  useEffect(() => {
+    registerInstrument(unique_id, {
+      read_voltage: 0,
+    });
+  }, [])
 
   // Clone and prepare the model
   useEffect(() => {
@@ -43,7 +51,7 @@ const DVM: React.FC<DVM2PROPS> = ({
     
     <group ref={groupRef} position={position} rotation={rotation} scale={scale}>
       {model && <primitive object={model}/>}
-        <Text3D position={[0.4, 2.4, 3]} rotation={[3 * Math.PI / 2, 0, 0]} size={3} color="gray" digits={2} decimalPlaces={2} />
+        <Text3D unique_id={unique_id} category_read={"read_voltage"} position={[3.2, 3, 3]} rotation={[3 * Math.PI / 2, 0, Math.PI]} size={3} color="gray"/>
     </group>
   )
 }

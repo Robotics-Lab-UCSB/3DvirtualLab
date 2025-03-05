@@ -25,7 +25,7 @@ import WireStable from "../labComponents/SmallInstruments/wire_stable.tsx";
 import { WirePort } from "../miscellaneous/wirePort.tsx";
 import { generateWirePorts } from "../miscellaneous/wirePort.tsx";
 import GasSimulation from "../raycasters/particles.tsx";
-import Electrons from "../raycasters/eletrons.tsx";
+import Electrons from "../raycasters/particles/eletrons.tsx";
 import DVM2 from "../labComponents/FrankHertzMainComp/digitalVoltmeter2.tsx";
 
 const GraphPaperComponent: React.FC = () => {

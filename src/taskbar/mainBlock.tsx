@@ -1,9 +1,11 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback } from "react";
 import "./taskbar.css";
 import Bar from "./bar";
 import LabHelperMain from "./labHelper";
 import SettingsPage from "./node_mover/settingsPage";
 import LabManual from "./lab_manual/labManual";
+import { DnDProvider } from "./node_mover/DnDContext";
+import { ReactFlowProvider } from '@xyflow/react';
 
 interface FloatingSquareProps {
   width?: string;
@@ -29,32 +31,28 @@ const FloatingSquare: React.FC<FloatingSquareProps> = ({
     const displayChange = useCallback((value: number) => {
         setClickedTabNumber(value);
     }, []);
- 
-    const labHelperComponent = useMemo(() => <LabHelperMain />, []);
-    const labManualComponent = useMemo(() => <LabManual />, []);
-    const settingsPageComponent = useMemo(() => <SettingsPage />, []);
 
     return (
-        <div
-        className="floating-square"
-        style={{
-            width,
-            height,
-            left: hide ? x : "50%",
-            top: hide ? y : "50%",
-        }}
-        >
-            <Bar moveCenter={moveCenter} displayChange={displayChange}/>
-            <div style={{ display: clickedTabNumber === 1 ? "block" : "none" }}>
-                {labHelperComponent}
-            </div>
-            <div style={{ display: clickedTabNumber === 0 ? "block" : "none" }}>
-                {settingsPageComponent}
-            </div>
-            <div style={{ display: clickedTabNumber === 2 ? "block" : "none" }}>
-                {settingsPageComponent}
-            </div>
-        </div>
+        <DnDProvider>
+            <ReactFlowProvider>
+                <div
+                    className="floating-square"
+                    style={{
+                        width,
+                        height,
+                        left: hide ? x : "50%",
+                        top: hide ? y : "50%",
+                    }}
+                >
+                    <Bar moveCenter={moveCenter} displayChange={displayChange} />
+                    
+                    {/* Directly render components without useMemo */}
+                    {clickedTabNumber === 1 && <LabHelperMain />}
+                    {clickedTabNumber === 0 && <SettingsPage />}
+                    {clickedTabNumber === 2 && <LabManual />}
+                </div>
+            </ReactFlowProvider>
+        </DnDProvider>
     );
 };
 

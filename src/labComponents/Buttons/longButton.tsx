@@ -8,39 +8,32 @@ interface ButtonProps {
   rotation?: [number, number, number];
   scale?: [number, number, number];
   unique_id: string;
-  typeGen: string;
 }
 
-const Button1: React.FC<ButtonProps> = ({
+const LongButton: React.FC<ButtonProps> = ({
   position,
-  rotation = [0, Math.PI, 0],
+  rotation = [0, Math.PI, 0], // Set rotation to zero initially
   scale = [1, 1, 1],
   unique_id,
-  typeGen,
 }) => {
   const groupRef = useRef<THREE.Group | null>(null);
-  const [isMovingForward, setIsMovingForward] = useState(false);
-  const [isMovingBack, setIsMovingBack] = useState(false);
+  const [isTiltingLeft, setIsTiltingLeft] = useState(false);
+  const [isTiltingRight, setIsTiltingRight] = useState(false);
+  const [resetTilt, setResetTilt] = useState(false);
   const [model, setModel] = useState<THREE.Object3D | null>(null);
 
-  // Dynamically load GLB model based on `typeGen`
-  const gltf = useLoader(
-    GLTFLoader,
-    ""
-  );
+  // Load model
+  const gltf = useLoader(GLTFLoader, "/current_instrument_buttons/long_button_glossy.glb");
 
-  // Clone and configure the GLTF model on load
   useEffect(() => {
     if (gltf?.scene) {
       const clonedScene = gltf.scene.clone();
-
-      // Add unique ID and click behavior
       clonedScene.traverse((child) => {
         if ((child as THREE.Mesh).isMesh) {
           const mesh = child as THREE.Mesh;
           mesh.userData.unique_id = unique_id;
           mesh.userData.handleIntersect = handleClick;
-          mesh.userData.type = "triangle_circle_button";
+          mesh.userData.type = "long_button_type";
         }
       });
 
@@ -48,52 +41,63 @@ const Button1: React.FC<ButtonProps> = ({
     }
   }, [gltf, unique_id]);
 
-  // Animation logic
+  useEffect(() => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y = Math.PI; // Manually set the rotation here
+    }
+  }, [model]);
+
   useFrame(() => {
     if (groupRef.current) {
-      const posY = groupRef.current.position.y;
+      let rotY = groupRef.current.rotation.y;
 
-      if (isMovingForward) {
-        const targetY = position[1] - 0.5;
-        groupRef.current.position.y = THREE.MathUtils.lerp(posY, targetY, 0.6);
+      if (isTiltingLeft) {
+        const targetRotY = Math.PI - 0.2; // Adjusted from Math.PI
+        groupRef.current.rotation.y = THREE.MathUtils.lerp(rotY, targetRotY, 0.5);
 
-        if (Math.abs(posY - targetY) < 0.01) {
-          setIsMovingForward(false);
-          setTimeout(() => setIsMovingBack(true), 50);
+        if (Math.abs(rotY - targetRotY) < 0.01) {
+          setIsTiltingLeft(false);
+          setTimeout(() => setResetTilt(true), 50);
         }
       }
 
-      if (isMovingBack) {
-        const targetY = position[1];
-        groupRef.current.position.y = THREE.MathUtils.lerp(posY, targetY, 0.4);
+      if (isTiltingRight) {
+        const targetRotY = Math.PI + 0.2; // Adjusted from Math.PI
+        groupRef.current.rotation.y = THREE.MathUtils.lerp(rotY, targetRotY, 0.5);
 
-        if (Math.abs(posY - targetY) < 0.01) {
-          setIsMovingBack(false);
+        if (Math.abs(rotY - targetRotY) < 0.01) {
+          setIsTiltingRight(false);
+          setTimeout(() => setResetTilt(true), 50);
+        }
+      }
+
+      if (resetTilt) {
+        groupRef.current.rotation.y = THREE.MathUtils.lerp(rotY, Math.PI, 0.3);
+        if (Math.abs(rotY - Math.PI) < 0.01) {
+          setResetTilt(false);
         }
       }
     }
   });
 
-  // Handle click event
-  const handleClick = () => {
-    if (!isMovingForward && !isMovingBack) {
-      setIsMovingForward(true);
+  const handleClick = (position: string) => {
+    console.log("Button clicked at position:", position);
+    if (!isTiltingLeft && !isTiltingRight) {
+      if (position === "right") {
+        setIsTiltingLeft(true);
+      } else if (position === "left") {
+        setIsTiltingRight(true);
+      }
     }
   };
 
-  // Render nothing until the model is ready
   if (!model) return null;
 
   return (
-    <group
-      ref={groupRef}
-      position={position}
-      rotation={rotation}
-      scale={scale}
-    >
+    <group ref={groupRef} position={position} scale={scale} rotation={rotation}>
       <primitive object={model} />
     </group>
   );
 };
 
-export default Button1;
+export default LongButton;

@@ -8,6 +8,7 @@ interface CurrentKnobProps {
   rotation?: [number, number, number]
   scale?: [number, number, number]
   unique_id: string
+  type_inner: string
 }
 
 const CurrentKnob: React.FC<CurrentKnobProps> = ({
@@ -15,6 +16,7 @@ const CurrentKnob: React.FC<CurrentKnobProps> = ({
   rotation = [0, 0, 0],
   unique_id,
   scale = [0.2, 0.3, 0.2],
+  type_inner
 }) => {
   const groupRef = useRef<THREE.Group | null>(null)
 
@@ -31,6 +33,7 @@ const CurrentKnob: React.FC<CurrentKnobProps> = ({
           const mesh = child as THREE.Mesh
           mesh.userData.unique_id = unique_id
           mesh.userData.type = "current_knob"
+          mesh.userData.type_inner = type_inner
         }
       })
 
