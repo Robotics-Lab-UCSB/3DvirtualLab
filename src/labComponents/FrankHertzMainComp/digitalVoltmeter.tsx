@@ -51,7 +51,8 @@ const DVM: React.FC<DVM2PROPS> = ({
     
     <group ref={groupRef} position={position} rotation={rotation} scale={scale}>
       {model && <primitive object={model}/>}
-        <Text3D unique_id={unique_id} category_read={"read_voltage"} position={[3.2, 3, 3]} rotation={[3 * Math.PI / 2, 0, Math.PI]} size={3} color="gray"/>
+        <Text3D unique_id={unique_id} category_read={"read_voltage"} position={[-2, 2.5, 3]} rotation={[3 * Math.PI / 2, 0, 0]} size={3} color="white"/>
+        <Text3D unique_id={unique_id} category_read={"read_voltage"} position={[-2, 2.4, 3]} rotation={[3 * Math.PI / 2, 0, 0]} size={3} color="black"/>
     </group>
   )
 }

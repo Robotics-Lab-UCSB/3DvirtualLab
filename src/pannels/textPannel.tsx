@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { Text } from "@react-three/drei";
 import { DoubleSide } from "three";
 import { useInstruments } from "../contexts/instrument_value";
 import { useFrame } from "@react-three/fiber";
-import { useState } from "react";
 
 interface Text3DProps {
   position?: [number, number, number];
@@ -12,7 +11,8 @@ interface Text3DProps {
   size?: number;
   color?: string;
   category_read: string;
-  decimalPlaces?: number; // New prop to control decimal places
+  decimalPlaces?: number; // Controls decimal places
+  timeDelay?: number; // Time delay in milliseconds (default: 500ms)
 }
 
 const Text3D: React.FC<Text3DProps> = ({
@@ -22,22 +22,42 @@ const Text3D: React.FC<Text3DProps> = ({
   color = "white",
   unique_id,
   category_read,
-  decimalPlaces = 2, // Default to 2 decimal places
+  decimalPlaces = 2, // Default decimal places
+  timeDelay = 300, // Default delay of 500ms
 }) => {
   const { instruments, readInstrument } = useInstruments();
   const [displayText, setDisplayText] = useState<string>("Loading...");
+  const lastUpdateTime = useRef<number>(0); // Track last update time
 
-  useFrame(() => {
-    if (instruments[unique_id]) {
-      let displayValue = readInstrument(unique_id, category_read);
+  useFrame(({ clock }) => {
+    const currentTime = clock.getElapsedTime() * 1000; // Convert to milliseconds
 
-      if (typeof displayValue === "number") {
-        displayValue = displayValue.toFixed(decimalPlaces); // Format number
+    if (currentTime - lastUpdateTime.current >= timeDelay) {
+      if (instruments[unique_id]) {
+        let displayValue = readInstrument(unique_id, category_read);
+
+        if (typeof displayValue === "string") {
+          displayValue = parseFloat(displayValue); // Ensure it's a number
+        }
+
+        if (typeof displayValue === "number" && !isNaN(displayValue)) {
+          if (category_read === "read_current") {
+            let decimal = "0.000000";
+            if (displayValue !== 0) {
+              decimal = (displayValue + Math.random() * 0.01).toFixed(5);
+            }
+            setDisplayText(decimal);
+          } else {
+            setDisplayText(displayValue.toFixed(decimalPlaces)); // Format number
+          }
+        } else {
+          setDisplayText("N/A"); // Handle invalid values
+        }
+      } else {
+        setDisplayText("");
       }
 
-      setDisplayText(displayValue);
-    } else {
-      setDisplayText("");
+      lastUpdateTime.current = currentTime; // Update last execution time
     }
   });
 

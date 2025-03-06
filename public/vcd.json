@@ -1,0 +1,402 @@
+[
+    {
+        "Voltage (V)": 1,
+        "Current (A)": 0.0981
+    },
+    {
+        "Voltage (V)": 2,
+        "Current (A)": 0.0994
+    },
+    {
+        "Voltage (V)": 3,
+        "Current (A)": 0.0005
+    },
+    {
+        "Voltage (V)": 4,
+        "Current (A)": 0.3002
+    },
+    {
+        "Voltage (V)": 5,
+        "Current (A)": 0.4997
+    },
+    {
+        "Voltage (V)": 6,
+        "Current (A)": 0.5003
+    },
+    {
+        "Voltage (V)": 7,
+        "Current (A)": 0.5998
+    },
+    {
+        "Voltage (V)": 8,
+        "Current (A)": 0.5001
+    },
+    {
+        "Voltage (V)": 9,
+        "Current (A)": 0.5995
+    },
+    {
+        "Voltage (V)": 10,
+        "Current (A)": 0.4004
+    },
+    {
+        "Voltage (V)": 11,
+        "Current (A)": 0.2999
+    },
+    {
+        "Voltage (V)": 12,
+        "Current (A)": 0.3002
+    },
+    {
+        "Voltage (V)": 13,
+        "Current (A)": 0.2997
+    },
+    {
+        "Voltage (V)": 14,
+        "Current (A)": 0.3
+    },
+    {
+        "Voltage (V)": 15,
+        "Current (A)": 0.3003
+    },
+    {
+        "Voltage (V)": 16,
+        "Current (A)": 0.2996
+    },
+    {
+        "Voltage (V)": 17,
+        "Current (A)": 0.3001
+    },
+    {
+        "Voltage (V)": 18,
+        "Current (A)": 0.2998
+    },
+    {
+        "Voltage (V)": 19,
+        "Current (A)": 0.3005
+    },
+    {
+        "Voltage (V)": 20,
+        "Current (A)": 0.2999
+    },
+    {
+        "Voltage (V)": 21,
+        "Current (A)": 0.3002
+    },
+    {
+        "Voltage (V)": 22,
+        "Current (A)": 0.2997
+    },
+    {
+        "Voltage (V)": 23,
+        "Current (A)": 0.3003
+    },
+    {
+        "Voltage (V)": 24,
+        "Current (A)": 0.2998
+    },
+    {
+        "Voltage (V)": 25,
+        "Current (A)": 0.3
+    },
+    {
+        "Voltage (V)": 26,
+        "Current (A)": 0.2995
+    },
+    {
+        "Voltage (V)": 27,
+        "Current (A)": 0.3004
+    },
+    {
+        "Voltage (V)": 28,
+        "Current (A)": 0.2999
+    },
+    {
+        "Voltage (V)": 29,
+        "Current (A)": 0.3001
+    },
+    {
+        "Voltage (V)": 30,
+        "Current (A)": 0.2996
+    },
+    {
+        "Voltage (V)": 31,
+        "Current (A)": 0.3002
+    },
+    {
+        "Voltage (V)": 32,
+        "Current (A)": 0.2998
+    },
+    {
+        "Voltage (V)": 33,
+        "Current (A)": 0.3003
+    },
+    {
+        "Voltage (V)": 34,
+        "Current (A)": 0.2997
+    },
+    {
+        "Voltage (V)": 35,
+        "Current (A)": 0.3
+    },
+    {
+        "Voltage (V)": 36,
+        "Current (A)": 0.3004
+    },
+    {
+        "Voltage (V)": 37,
+        "Current (A)": 0.2995
+    },
+    {
+        "Voltage (V)": 38,
+        "Current (A)": 0.3001
+    },
+    {
+        "Voltage (V)": 39,
+        "Current (A)": 0.2999
+    },
+    {
+        "Voltage (V)": 40,
+        "Current (A)": 0.3002
+    },
+    {
+        "Voltage (V)": 41,
+        "Current (A)": 0.2997
+    },
+    {
+        "Voltage (V)": 42,
+        "Current (A)": 0.3003
+    },
+    {
+        "Voltage (V)": 43,
+        "Current (A)": 0.2998
+    },
+    {
+        "Voltage (V)": 44,
+        "Current (A)": 0.3
+    },
+    {
+        "Voltage (V)": 45,
+        "Current (A)": 0.2996
+    },
+    {
+        "Voltage (V)": 46,
+        "Current (A)": 0.3004
+    },
+    {
+        "Voltage (V)": 47,
+        "Current (A)": 0.2999
+    },
+    {
+        "Voltage (V)": 48,
+        "Current (A)": 0.3002
+    },
+    {
+        "Voltage (V)": 49,
+        "Current (A)": 0.2997
+    },
+    {
+        "Voltage (V)": 50,
+        "Current (A)": 0.3001
+    },
+    {
+        "Voltage (V)": 51,
+        "Current (A)": 0.2998
+    },
+    {
+        "Voltage (V)": 52,
+        "Current (A)": 0.3003
+    },
+    {
+        "Voltage (V)": 53,
+        "Current (A)": 0.2999
+    },
+    {
+        "Voltage (V)": 54,
+        "Current (A)": 0.3002
+    },
+    {
+        "Voltage (V)": 55,
+        "Current (A)": 0.2997
+    },
+    {
+        "Voltage (V)": 56,
+        "Current (A)": 0.3001
+    },
+    {
+        "Voltage (V)": 57,
+        "Current (A)": 0.2998
+    },
+    {
+        "Voltage (V)": 58,
+        "Current (A)": 0.3
+    },
+    {
+        "Voltage (V)": 59,
+        "Current (A)": 0.2996
+    },
+    {
+        "Voltage (V)": 60,
+        "Current (A)": 0.3004
+    },
+    {
+        "Voltage (V)": 61,
+        "Current (A)": 0.2999
+    },
+    {
+        "Voltage (V)": 62,
+        "Current (A)": 0.3002
+    },
+    {
+        "Voltage (V)": 63,
+        "Current (A)": 0.2997
+    },
+    {
+        "Voltage (V)": 64,
+        "Current (A)": 0.3003
+    },
+    {
+        "Voltage (V)": 65,
+        "Current (A)": 0.2998
+    },
+    {
+        "Voltage (V)": 66,
+        "Current (A)": 0.3001
+    },
+    {
+        "Voltage (V)": 67,
+        "Current (A)": 0.2996
+    },
+    {
+        "Voltage (V)": 68,
+        "Current (A)": 0.3004
+    },
+    {
+        "Voltage (V)": 69,
+        "Current (A)": 0.2999
+    },
+    {
+        "Voltage (V)": 70,
+        "Current (A)": 0.3002
+    },
+    {
+        "Voltage (V)": 71,
+        "Current (A)": 0.2997
+    },
+    {
+        "Voltage (V)": 72,
+        "Current (A)": 0.3003
+    },
+    {
+        "Voltage (V)": 73,
+        "Current (A)": 0.2998
+    },
+    {
+        "Voltage (V)": 74,
+        "Current (A)": 0.3
+    },
+    {
+        "Voltage (V)": 75,
+        "Current (A)": 0.2996
+    },
+    {
+        "Voltage (V)": 76,
+        "Current (A)": 0.3004
+    },
+    {
+        "Voltage (V)": 77,
+        "Current (A)": 0.2999
+    },
+    {
+        "Voltage (V)": 78,
+        "Current (A)": 0.3002
+    },
+    {
+        "Voltage (V)": 79,
+        "Current (A)": 0.2997
+    },
+    {
+        "Voltage (V)": 80,
+        "Current (A)": 0.3003
+    },
+    {
+        "Voltage (V)": 81,
+        "Current (A)": 0.2998
+    },
+    {
+        "Voltage (V)": 82,
+        "Current (A)": 0.3001
+    },
+    {
+        "Voltage (V)": 83,
+        "Current (A)": 0.2996
+    },
+    {
+        "Voltage (V)": 84,
+        "Current (A)": 0.3004
+    },
+    {
+        "Voltage (V)": 85,
+        "Current (A)": 0.2999
+    },
+    {
+        "Voltage (V)": 86,
+        "Current (A)": 0.3002
+    },
+    {
+        "Voltage (V)": 87,
+        "Current (A)": 0.2997
+    },
+    {
+        "Voltage (V)": 88,
+        "Current (A)": 0.3003
+    },
+    {
+        "Voltage (V)": 89,
+        "Current (A)": 0.2998
+    },
+    {
+        "Voltage (V)": 90,
+        "Current (A)": 0.3
+    },
+    {
+        "Voltage (V)": 91,
+        "Current (A)": 0.2996
+    },
+    {
+        "Voltage (V)": 92,
+        "Current (A)": 0.3004
+    },
+    {
+        "Voltage (V)": 93,
+        "Current (A)": 0.2999
+    },
+    {
+        "Voltage (V)": 94,
+        "Current (A)": 0.3002
+    },
+    {
+        "Voltage (V)": 95,
+        "Current (A)": 0.2997
+    },
+    {
+        "Voltage (V)": 96,
+        "Current (A)": 0.3003
+    },
+    {
+        "Voltage (V)": 97,
+        "Current (A)": 0.2998
+    },
+    {
+        "Voltage (V)": 98,
+        "Current (A)": 0.3001
+    },
+    {
+        "Voltage (V)": 99,
+        "Current (A)": 0.2996
+    },
+    {
+        "Voltage (V)": 100,
+        "Current (A)": 0.3002
+    }
+]

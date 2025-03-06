@@ -4,7 +4,7 @@ import { useLoader } from "@react-three/fiber"
 import { GLTFLoader } from "three-stdlib"
 import CurrentKnob from "../knobs/currentKnob"
 import { useInstruments } from "../../contexts/instrument_value"
-
+import Label from "../../pannels/labels"
 interface CurrentRegulatorProps {
   position: [number, number, number] // Position prop
   rotation?: [number, number, number] // Optional rotation prop
@@ -55,18 +55,24 @@ const CurrentRegulator: React.FC<CurrentRegulatorProps> = ({
         unique_id={unique_id}
         type_inner="filament_knob"
       />
+      <Label label="Filament Knob" position={[2, 14.2, 10]} rotation={[3 * Math.PI / 2, 0, Math.PI]}  size={2} color="white" />
+      <Label label="Filament Knob" position={[2, 14, 10]} rotation={[3 * Math.PI / 2, 0, Math.PI]}  size={2} color="black" />
       <CurrentKnob
         position={[-8.6, 14.5, -23.7]}
         scale={[0.1, 0.2, 0.1]}
         unique_id={unique_id}
         type_inner="VRknob"
       />
+      <Label label="VR Knob" position={[-5.5, 14.2, -20]} rotation={[3 * Math.PI / 2, 0, Math.PI]} size={2} color="white" />
+      <Label label="VR Knob" position={[-5.5, 14, -20]} rotation={[3 * Math.PI / 2, 0, Math.PI]} size={2} color="black" />
       <CurrentKnob
         position={[3, 14.5, -23.7]}
         scale={[0.1, 0.2, 0.1]}
         unique_id={unique_id}
         type_inner="VAknob"
       />
+      <Label label="VA Knob" position={[6, 14.2, -20]} rotation={[3 * Math.PI / 2, 0, Math.PI]} size={2} color="white" />
+      <Label label="VA Knob" position={[6, 14, -20]} rotation={[3 * Math.PI / 2, 0, Math.PI]} size={2} color="black" />
     </group>
   )
 }

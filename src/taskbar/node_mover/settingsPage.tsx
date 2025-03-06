@@ -21,6 +21,8 @@ import VVR from "../lab_nodes/vvr";
 import Electrometer from "../lab_nodes/eletrometer";
 import Triple_Output_supply from "../lab_nodes/triple_output_supply";
 import CurrentRegulator from "../lab_nodes/currentRegulator";
+import OscilloscopeBox from "../lab_nodes/osciliscope";
+import FloppyDisk from "../lab_nodes/floppydisk";
 
 import { useNodePosition } from "./hook_position";
 import { useDnD } from "./DnDContext";
@@ -54,6 +56,8 @@ const nodeTypes = {
   Electrometer,
   Triple_Output_supply,
   CurrentRegulator,
+  OscilloscopeBox,
+  FloppyDisk,
 };
 
 const SettingsPage: React.FC<SettingsPageProps> = () => {
@@ -72,6 +76,12 @@ const SettingsPage: React.FC<SettingsPageProps> = () => {
 
   const id = useRef<number>(0)
   const getId = () => `dndnode_${id.current++}`;
+
+  const onNodeDelete = useCallback((nodeId: string) => {
+    console.log("Node deleted, ID:", nodeId);
+    // Just a stub right now
+    // You can do anything else you need here, e.g., removing from local storage, etc.
+  }, []);
 
   const handleNodesChange = useCallback(
     (changes: any[]) => {
@@ -103,6 +113,10 @@ const SettingsPage: React.FC<SettingsPageProps> = () => {
             // Remove the timer once fired
             delete debounceTimersRef.current[change.id];
           }, 100);
+        }
+        if (change.type === "remove") {
+          console.log("Node removed, ID:", change.id);
+
         }
       });
 
@@ -251,6 +265,8 @@ const SettingsPage: React.FC<SettingsPageProps> = () => {
     "Electrometer",
     "Triple_Output_supply",
     "CurrentRegulator",
+    'OscilloscopeBox',
+    "FloppyDisk",
   ];
 
   // When user starts dragging from the search menu, set the ref

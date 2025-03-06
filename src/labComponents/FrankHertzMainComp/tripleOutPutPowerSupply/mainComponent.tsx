@@ -8,7 +8,7 @@ import RadioDial from "../../SmallInstruments/circularTherm/radioDial"
 
 interface TripleOutputProps {
   position: [number, number, number] // Position prop
-  unique_id?: string
+  unique_id: string
   scale?: [number, number, number]
 }
 

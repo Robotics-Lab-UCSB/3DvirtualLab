@@ -8,6 +8,7 @@ interface InstrumentContextType {
   updateInstrument: (idx: string, key: string, value: any) => void;
   deleteInstrument: (idx: string) => void;
   readInstrument: (idx: string, key: string) => any | undefined;
+  updateInstrumentSafe: (idx: string, key: string, value: any) => void;
 }
 
 const InstrumentContext = createContext<InstrumentContextType | undefined>(
@@ -30,6 +31,16 @@ export const InstrumentProvider: React.FC<{ children: React.ReactNode }> = ({
     });
   };
 
+  const updateInstrumentSafe = (id: string, key: string, value: any) => {
+    if (instruments[id]?.[key] !== value) { // ✅ Only update if different
+      console.log(`✅ Updating ${id} → ${key} = ${value}`);
+      updateInstrument(id, key, value);
+    } else {
+      console.log(`❌ Skipping redundant update for ${id} → ${key}`);
+    }
+  };
+  
+
   const deleteInstrument = (idx: string) => {
     setInstruments((prev) => {
       const newInstruments = { ...prev };
@@ -44,7 +55,7 @@ export const InstrumentProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <InstrumentContext.Provider
-      value={{ instruments, registerInstrument, updateInstrument, deleteInstrument, readInstrument }}
+      value={{ instruments, registerInstrument, updateInstrumentSafe, updateInstrument, deleteInstrument, readInstrument }}
     >
       {children}
     </InstrumentContext.Provider>

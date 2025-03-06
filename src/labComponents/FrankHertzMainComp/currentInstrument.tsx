@@ -24,7 +24,29 @@ const CurrentInstrument: React.FC<CurrentInstrumentProps> = ({
   const gltf = useLoader(GLTFLoader, "/current_instrument/ci3.glb");
   const [model, setModel] = useState<THREE.Object3D | null>(null);
   const numberRef = useRef(0);
+  const { registerInstrument, updateInstrument, readInstrument } = useInstruments();
+  const [readCurrent, setReadCurrent] = useState<number>(0);
+  const [timeDelay, setTimeDelay] = useState<number>(30);
 
+  useEffect(() => {
+    registerInstrument(unique_id, {
+      read_current: readCurrent,
+    });
+
+    const roundedValue = readCurrent.toFixed(5); // Format the value to 5 decimal places
+
+    // Optionally update or log the rounded value
+    // console.log(roundedValue);
+  }, []);
+
+  const setTimeDelayTo20msThenReset = () => {
+    setTimeDelay(500); // Set to 20ms
+  
+    setTimeout(() => {
+      setTimeDelay(30); // Reset back to default (or any previous value)
+    }, 2000); // Reset after 2 seconds
+  };
+  
   useEffect(() => {
     if (gltf.scene) {
       // Clone the GLTF scene to avoid conflicts
@@ -72,8 +94,8 @@ const CurrentInstrument: React.FC<CurrentInstrumentProps> = ({
   return (
     <group ref={groupRef} position={position} rotation={rotation}>
       {model && <primitive object={model} scale={[0.25, 0.25, 0.25]} />}
-      <Text3D unique_id={unique_id} position={[-15, 11, 27.5]} size={4} color="gray" />
-      
+        <Text3D timeDelay={timeDelay} unique_id={unique_id} category_read={"read_current"} position={[-14, 11, 27.2]} rotation={[ Math.PI , Math.PI, Math.PI]} size={6} color="white" decimalPlaces={4}/>
+
       {/* Row of 8 circle buttons */}
       {buttonPositions.map((buttonPosition, index) => (
         <ButtonCircleAndTriangle
@@ -81,6 +103,7 @@ const CurrentInstrument: React.FC<CurrentInstrumentProps> = ({
           position={buttonPosition}
           rotation={[Math.PI / 2, 3 * Math.PI / 2, 0]}
           scale={[0.1, 0.1, 0.1]}
+          handleIntersect={setTimeDelayTo20msThenReset}
           unique_id={`circle-button-${index}`}
           typeGen="circleButton" // Using circleButton type for all buttons
         />

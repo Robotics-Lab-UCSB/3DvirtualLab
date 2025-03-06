@@ -12,7 +12,7 @@ import HeatingRods from "./heating_rods"
 import Electrons from "../../raycasters/particles/eletrons"
 import { Position } from '@xyflow/react';
 import { NodePositionProvider } from '../../taskbar/node_mover/hook_position';
-import { runFranckHertzExperiment } from "../../A_JS_Simulations"
+import { useInstruments } from "../../contexts/instrument_value"
 
 interface FrankHertzMainProps {
   position: [number, number, number] // Position prop
@@ -30,6 +30,13 @@ const FrankHertzMain: React.FC<FrankHertzMainProps> = ({
   const gltf = useLoader(GLTFLoader, "/frank_hertz/main_box3.glb")
   const [model, setModel] = useState<THREE.Object3D | null>(null)
   const groupRef = useRef<THREE.Group | null>(null)
+  const { registerInstrument, updateInstrument, readInstrument } = useInstruments();
+  
+  useEffect(() => {
+    registerInstrument(unique_id, {
+      output_current: 0,
+    });
+  }, [])
 
   // Clone and prepare the model
   useEffect(() => {

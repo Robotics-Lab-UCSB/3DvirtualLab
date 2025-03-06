@@ -5,8 +5,8 @@ const VVR = ({ data }: any) => {
   return (
     <div
       style={{
-        width: "200px",
-        height: "100px",
+        width: "100px",
+        height: "180px",
         borderRadius: "12px",
         border: "2px solid black",
         background: "linear-gradient(135deg, #fffbe6, #fef9c3)", // Light modern yellow shade
@@ -22,14 +22,28 @@ const VVR = ({ data }: any) => {
       }}
     >
       VVR
-
       {/* Single Input Handle */}
-      <span style={{ position: "absolute", left: "-50px", top: "50%", fontSize: "12px", color: "#000000" }}>
+      <span
+        style={{
+          position: "absolute",
+          left: "-50px",
+          top: "50%",
+          transform: "translateY(-50%)",
+          fontSize: "12px",
+          color: "#000",
+        }}
+      >
         Voltage
       </span>
-      <Handle type="target" position={Position.Left} id="input-voltage" style={{ top: "50%", backgroundColor: "#000000" }} />
+      <Handle
+        type="target"
+        position={Position.Left}
+        id="input-voltage"
+        style={{ top: "50%", backgroundColor: "#000" }}
+      />
     </div>
   );
 };
 
 export default VVR;
+

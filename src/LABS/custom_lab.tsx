@@ -20,6 +20,8 @@ import CurrentInstrument from "../labComponents/FrankHertzMainComp/currentInstru
 import Triple_Output_supply from "../taskbar/lab_nodes/triple_output_supply.tsx";
 import { NodeEdgeProvider } from "../taskbar/node_mover/node_edge_context.tsx";
 import PreloadModels from "./preload_models.tsx";
+import Oscilloscope from "../labComponents/Oscillscope/oscillscope.tsx";
+import FloppyDisk from "../labComponents/floppydisk.tsx";
 
 const object3DMap: Record<string, React.FC<{ unique_id: string, position: [number, number, number]; rotation?: [number, number, number]; scale?: [number, number, number]}>> = {
   "FrankHertzBox": FrankHertzMain,
@@ -28,6 +30,8 @@ const object3DMap: Record<string, React.FC<{ unique_id: string, position: [numbe
   "Electrometer": CurrentInstrument,
   "CurrentRegulator": CurrentRegulator,
   "Triple_Output_supply": TripleOutput,
+  "OscilloscopeBox": Oscilloscope, 
+  "FloppyDisk": FloppyDisk,
 };
 
 const CustomLab: React.FC = () => {
@@ -61,17 +65,17 @@ const CustomLab: React.FC = () => {
             rotation=[0, 3 * Math.PI / 2, 0];
             return <Component unique_id={id} key={id} position={position} rotation={rotation} scale={[1.2, 1.44, 1.2]}/>;
         } else if (type === "VVR") {
-            xOffset = -170;
+            xOffset = -190;
             yOffset = -120;
             zOffset = 15;
-            rotation = [0, Math.PI, 0];
+            rotation = [0, 0, 0];
         } else if (type === "Electrometer") {
             xOffset = -168;
             yOffset = -110;
             zOffset = 16;
             rotation = [0, 0, 0];
         } else if (type === "Triple_Output_supply") {
-            xOffset = -158;
+            xOffset = -110;
             yOffset = -95;
             zOffset = 15;
         } else if (type === "Variac") {
@@ -79,11 +83,21 @@ const CustomLab: React.FC = () => {
             yOffset = -120;
             zOffset = 15;
             rotation = [0, 3 * Math.PI / 2, 0];
-        } else if (type == "CurrentRegulator") {
-            xOffset = -170;
+        } else if (type === "CurrentRegulator") {
+            xOffset = -140;
             yOffset = -120;
             zOffset = 15;
-            rotation = [0, 3 * Math.PI / 2, 0];
+            rotation = [0, Math.PI, 0];
+        } else if (type === "OscilloscopeBox") {
+            xOffset = -210;
+            yOffset = -100;
+            zOffset = 15;
+            rotation = [0, 0, 0];
+        } else if (type === "FloppyDisk") {
+            xOffset = -220;
+            yOffset = -100;
+            zOffset = 21;
+            rotation = [0, 0, 3 * Math.PI / 2];
         }
         
         const Component = object3DMap[type]; // Ensure the type maps to a component

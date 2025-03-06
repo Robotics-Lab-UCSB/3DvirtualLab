@@ -6,7 +6,7 @@ import * as THREE from "three"
 import OvenKnob from "./knob"
 import { useWebSocket } from "../../../contexts/websocketContext"
 import { useInstruments } from '../../../contexts/instrument_value';
-
+import Text3D from "../../../pannels/textPannel"
 interface VVRProps {
   position: [number, number, number]
   rotation?: [number, number, number]
@@ -71,6 +71,7 @@ const VVR: React.FC<VVRProps> = ({
     <group ref={groupRef} position={position} rotation={rotation} scale={scale}>
       {model && <primitive object={model} />}
       <OvenKnob rotation={[0, 1.2, 0]} position={[5, 20.5, -7]} unique_id={unique_id} scale={[0.9, 0.9, 0.9]}/>
+      
     </group>
   )
 }

@@ -6,6 +6,9 @@ class Particle {
     position: THREE.Vector3;
     velocity: THREE.Vector3;
     bounds: THREE.Box3;
+    travelDistance: number;
+    slowDownThreshold: number;
+    minVelocity: number;
 
     constructor(bounds: THREE.Box3, boxPosition: THREE.Vector3) {
         this.position = new THREE.Vector3(
@@ -14,11 +17,9 @@ class Particle {
             boxPosition.z
         );
 
-        // 🔹 Generate velocity within a 95-degree upward cone
         const angle = (Math.random() * 95 - 47.5) * (Math.PI / 180);
         const phi = Math.random() * Math.PI * 2;
-
-        const speed = Math.random() * 0.1 + 0.02; // 🔹 Reduced speed (was 0.5, now 0.02 - 0.1)
+        const speed = Math.random() * 0.1 + 0.9; // Speed range: 0.9 - 1.0
 
         this.velocity = new THREE.Vector3(
             speed * Math.sin(angle) * Math.cos(phi),
@@ -27,23 +28,39 @@ class Particle {
         );
 
         this.bounds = bounds;
+        this.travelDistance = 0;
+        this.slowDownThreshold = Math.random() * 10 + 3; // Travel between 10 - 20 units before slowing down
+        this.minVelocity = 0.02; // 🔹 Minimum velocity before removing the particle
     }
 
     update() {
+        const prevPosition = this.position.clone();
         this.position.add(this.velocity);
+        this.travelDistance += prevPosition.distanceTo(this.position); // Track traveled distance
 
-        // Collision detection and response
-        if (this.position.x <= this.bounds.min.x || this.position.x >= this.bounds.max.x) {
-            this.velocity.x *= -1;
-        }
-        if (this.position.y <= this.bounds.min.y || this.position.y >= this.bounds.max.y) {
-            this.velocity.y *= -1;
-        }
-        if (this.position.z <= this.bounds.min.z || this.position.z >= this.bounds.max.z) {
-            this.velocity.z *= -1;
+        // 🔹 Once past threshold, slow down
+        if (this.travelDistance >= this.slowDownThreshold) {
+            this.velocity.multiplyScalar(0.95); // 🔹 Reduce speed slightly (95% of previous speed)
         }
 
-        this.position.clamp(this.bounds.min, this.bounds.max);
+        // 🔹 Remove particle if velocity is too low
+        if (this.velocity.length() < this.minVelocity) {
+            return false;
+        }
+
+        // Check if particle should be removed due to out-of-bounds
+        if (
+            this.position.x <= this.bounds.min.x ||
+            this.position.x >= this.bounds.max.x ||
+            this.position.y <= this.bounds.min.y ||
+            this.position.y >= this.bounds.max.y ||
+            this.position.z <= this.bounds.min.z ||
+            this.position.z >= this.bounds.max.z
+        ) {
+            return false;
+        }
+
+        return true;
     }
 }
 
@@ -60,7 +77,7 @@ const Electrons: React.FC<ElectronsProps> = ({
     width = 8,
     height = 27.5,
     length = 10,
-    particleCount = 50,
+    particleCount = 800,
     position = [0, 0, 0],
     spawnInterval = 500, // 🔹 Default: Spawn one electron every 500ms
 }) => {
@@ -95,11 +112,11 @@ const Electrons: React.FC<ElectronsProps> = ({
     }, [particleCount, bounds, boxPosition, spawnInterval, spawnCount]);
 
     useFrame(() => {
-        particlesRef.current.forEach((particle) => particle.update());
+        particlesRef.current = particlesRef.current.filter((particle) => particle.update());
         setTick((t) => t + 1);
     });
-
-    const sphereGeometry = useMemo(() => new THREE.SphereGeometry(0.2, 16, 16), []);
+    
+    const sphereGeometry = useMemo(() => new THREE.SphereGeometry(0.3, 16, 16), []);
     const sphereMaterial = useMemo(() => new THREE.MeshStandardMaterial({ color: "blue" }), []);
     const wireframeMaterial = useMemo(() => new THREE.MeshBasicMaterial({ color: "white", wireframe: true }), []);
 

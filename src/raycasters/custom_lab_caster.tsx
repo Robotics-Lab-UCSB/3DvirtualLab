@@ -349,11 +349,11 @@ const CustomLabRaycastingComponent: React.FC = () => {
 
             if (typeInner === "filament_knob") {
               const calculatedFilament = (intersectedObject.rotation.y + 2 * Math.PI) % (2 * Math.PI);
-              const filamentVoltage = (calculatedFilament / (2 * Math.PI)) * 10; // Example scaling
+              const filamentVoltage = (calculatedFilament / (2 * Math.PI)) * 30; // Example scaling
               updateInstrument(intersectedObject.userData.unique_id, "filament_voltage", filamentVoltage);
             } else if (typeInner === "VRknob") {
               const calculatedVR = (intersectedObject.rotation.y + 2 * Math.PI) % (2 * Math.PI);
-              const retardingVoltage = (calculatedVR / (2 * Math.PI)) * 50; // Example scaling
+              const retardingVoltage = (calculatedVR / (2 * Math.PI)) * 10; // Example scaling
               updateInstrument(intersectedObject.userData.unique_id, "retarding_voltage", retardingVoltage);
             } else if (typeInner === "VAknob") {
               const calculatedVA = (intersectedObject.rotation.y + 2 * Math.PI) % (2 * Math.PI);

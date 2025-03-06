@@ -3,6 +3,7 @@ import * as THREE from "three"
 import { useLoader, useThree } from "@react-three/fiber"
 import { GLTFLoader, RGBELoader } from "three-stdlib"
 import Electrons from "../../raycasters/particles/eletrons"
+import AirParticles from "../../raycasters/particles/air_particles"
 import { Position } from '@xyflow/react';
 
 interface FrankHertzTubeProps {
@@ -87,6 +88,7 @@ const FrankHertzTube: React.FC<FrankHertzTubeProps> = ({
     <group ref={groupRef} position={position} rotation={rotation} scale={scale}>
       {model && <primitive object={model} scale={[0.65, 0.65, 0.65]} />}
       <Electrons width={21} height={90} position={[2, 49.5, 0]}/>
+      <AirParticles width={21} height={90} position={[2, 49.5, 0]}/>
     </group>
   )
 }
