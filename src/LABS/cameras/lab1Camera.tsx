@@ -42,7 +42,7 @@ const Lab1Camera: React.FC = () => {
           const glowMesh = new THREE.Mesh(glowGeometry, glowMaterial);
       
           // Scale the glow mesh slightly larger than the object
-            glowMesh.position.copy(object.position);
+          glowMesh.position.copy(object.position);
           glowMesh.rotation.copy(object.rotation);
       
           // Add the glow mesh to the scene or as a child of the object
